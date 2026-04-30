@@ -99,7 +99,7 @@ router.post('/signin', (req, res) => {
         { expiresIn: '24h' }
       );
 
-      res.json({ result: true, token });
+      res.json({ result: true, token, firstname: data.firstname });
     } else {
       res.json({ result: false, error: 'User not found or wrong password' });
     }
