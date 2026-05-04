@@ -106,5 +106,38 @@ router.post('/signin', (req, res) => {
   });
 });
 
+//Changer l'image de profil
+router.put('/profile-image', (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ result: false, error: 'No token' });
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.status(401).json({ result: false, error: 'Invalid token' });
+  }
+  const { url_profile } = req.body;
+  User.findByIdAndUpdate(
+    decoded.userId,
+    { url_profile },
+    { new: true }
+  )
+  .then(updatedUser => {
+    if (!updatedUser) {
+      return res.json({ result: false, error: 'User not found' });
+    }
+    res.json({
+      result: true,
+      user: updatedUser
+    });
+  })
+  .catch(err => {
+    console.error(err);
+    res.status(500).json({ result: false, error: 'Server error' });
+  });
+});
+
 
 module.exports = router;
