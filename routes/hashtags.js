@@ -9,10 +9,11 @@ const { checkBody } = require('../modules/checkBody');
 
 router.get('/:tag', (req, res) => {
     const tag = req.params.tag;
-    Tweet.find({ hashtags: '#' + tag.toLowerCase() })
+    Tweet.find({ hashtags: tag.toLowerCase() })
     .sort({ createdAt: -1 }) //à voir
     .populate('user', 'username firstname')
     .then(tweets => {
+        console.log("TWEETS trouvés :", tweets);
         res.json({ result: true, tweets, nbTweets: tweets.length})
     })
     .catch(error => {

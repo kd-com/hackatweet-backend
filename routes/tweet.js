@@ -9,7 +9,7 @@ const { checkBody } = require('../modules/checkBody');
 
 function extractHashtags(text) {
   const pattern = /#[\w]+/g;
-  return (text.match(pattern) || []).map(tag => tag.toLowerCase());
+  return (text.match(pattern) || []).map(tag => tag.replace('#', '').toLowerCase());
 }
 
 //get Tweets 
