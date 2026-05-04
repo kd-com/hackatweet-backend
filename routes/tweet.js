@@ -12,11 +12,11 @@ function extractHashtags(text) {
   return (text.match(pattern) || []).map(tag => tag.replace('#', '').toLowerCase());
 }
 
-//get Tweets 
+// routes/tweets.js
 router.get('/', (req, res) => {
   Tweet.find()
-    .sort({ createdAt: -1 }) 
-    .populate('user', 'username firstname')
+    .sort({ createdAt: -1 })
+    .populate('user', 'username firstname') // <-- Seulement ces champs
     .then(tweets => {
       res.json({ result: true, tweets });
     })
