@@ -16,7 +16,7 @@ function extractHashtags(text) {
 router.get('/', (req, res) => {
   Tweet.find()
     .sort({ createdAt: -1 })
-    .populate('user', 'username firstname') // <-- Seulement ces champs
+    .populate('user', 'username firstname url_profile') // <-- Seulement ces champs
     .then(tweets => {
       res.json({ result: true, tweets });
     })
